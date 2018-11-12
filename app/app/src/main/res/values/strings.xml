@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">mosamimon</string>
+    <string name="email_hint">البريد الإلكتروني</string>
+    <string name="password_hint">كلمة المرور</string>
+    <string name="login">دخول</string>
+    <string name="login_header">دخول شركاء مصممون</string>
+    <string name="qr_line1">شركة السريع المحدودة</string>
+    <string name="qr_line2">تسجيل الخروج</string>
+    <string name="qr_btn_text">تحقق من رمز QR للعضوية</string>
+    <string name="qr_line3">أو</string>
+    <string name="qr_code_hint">ضع رقم العضوية هنا</string>
+    <string name="qr_code_last_btn">تحقق من رقم العضوية</string>
+    <string name="result_btn_text">إضافة والتسجيل الفاتورة</string>
+    <string name="web_link">www.msammon.com</string>
+</resources>
