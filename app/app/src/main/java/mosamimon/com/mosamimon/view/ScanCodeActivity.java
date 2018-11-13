@@ -14,7 +14,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import mosamimon.com.mosamimon.R;
 import mosamimon.com.mosamimon.rest.API;
-import mosamimon.com.mosamimon.rest.LoginResponse;
+import mosamimon.com.mosamimon.rest.ApiResponse;
+import mosamimon.com.mosamimon.rest.CustomerResponse;
 import retrofit2.Call;
 import retrofit2.Response;
 
@@ -34,6 +35,8 @@ public class ScanCodeActivity extends AppCompatActivity {
     @BindView(R.id.qrCode)
     EditText qrCode;
 
+    @BindView(R.id.webLink)
+    View webLink;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,7 +61,14 @@ public class ScanCodeActivity extends AppCompatActivity {
         qrSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                login(qrCode.getText().toString());
+                qrSubmit(qrCode.getText().toString());
+            }
+        });
+        webLink.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.msammon.com"));
+                startActivity(browserIntent);
             }
         });
     }
@@ -78,22 +88,27 @@ public class ScanCodeActivity extends AppCompatActivity {
         }
     }
 
-    private void login(String code) {
+    private void qrSubmit(String code) {
         progressBar.setVisibility(View.VISIBLE);
-        API.member().get_member(code).enqueue(new retrofit2.Callback<LoginResponse>() {
+        API.member().get_member(code).enqueue(new retrofit2.Callback<ApiResponse>() {
             @Override
-            public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
+            public void onResponse(Call<ApiResponse> call, Response<ApiResponse> response) {
                 progressBar.setVisibility(View.GONE);
-                Toast.makeText(ScanCodeActivity.this, "success", Toast.LENGTH_SHORT).show();
                 Toast.makeText(ScanCodeActivity.this, String.valueOf(response.code()), Toast.LENGTH_SHORT).show();
-                final LoginResponse loginResponse = response.body();
+                if (response.code() == 200) {
+                    Intent intent = new Intent(ScanCodeActivity.this, FinalActivity.class);
+                    intent.putExtra("extra", response.body());
+                    startActivity(intent);
+                } else {
+                    Toast.makeText(ScanCodeActivity.this, "fail", Toast.LENGTH_SHORT).show();
+                }
             }
 
             @Override
-            public void onFailure(Call<LoginResponse> call, Throwable throwable) {
+            public void onFailure(Call<ApiResponse> call, Throwable throwable) {
                 progressBar.setVisibility(View.GONE);
                 Log.e(TAG, throwable.getMessage());
-                Toast.makeText(getApplicationContext(), throwable.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(ScanCodeActivity.this, "fail", Toast.LENGTH_SHORT).show();
             }
         });
     }

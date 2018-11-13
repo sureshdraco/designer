@@ -11,11 +11,11 @@ import retrofit2.http.Query;
 public interface Member {
     @Multipart
     @POST("user/login")
-    Call<LoginResponse> login(@Part("email") RequestBody email, @Part("password") RequestBody password);
+    Call<ApiResponse> login(@Part("email") RequestBody email, @Part("password") RequestBody password);
 
 
     @GET("member/get_member")
-    Call<LoginResponse> get_member(@Query("customer_id") String customerId);
+    Call<ApiResponse> get_member(@Query("customer_id") String customerId);
 
 //	//TOP RATED MOVIES
 //	@GET("")

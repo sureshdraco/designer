@@ -21,6 +21,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".view.ScanCodeActivity" android:windowSoftInputMode="stateHidden"/>
+        <activity android:name=".view.FinalActivity" android:windowSoftInputMode="stateHidden"/>
     </application>
 
 </manifest>
