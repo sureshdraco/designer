@@ -2,6 +2,8 @@ package mosamimon.com.mosamimon.view;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+import android.view.View;
 import android.widget.TextView;
 
 import butterknife.BindView;
@@ -10,29 +12,43 @@ import mosamimon.com.mosamimon.R;
 import mosamimon.com.mosamimon.rest.ApiResponse;
 
 public class FinalActivity extends AppCompatActivity {
-
-    private static final String TAG = FinalActivity.class.getSimpleName();
-    private ApiResponse customerResponse;
-    @BindView(R.id.name)
-    TextView name;
-    @BindView(R.id.number)
-    TextView number;
-    @BindView(R.id.result)
-    TextView result;
-
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_result);
-        setTitle("ttest");
-        ButterKnife.bind(this);
-        customerResponse = getIntent().getParcelableExtra("extra");
-        try {
-            name.setText(customerResponse.result.get(0).fullname);
-            number.setText(customerResponse.result.get(0).phone);
-        } catch (Exception e) {
-        }
+	
+	private static final String TAG = FinalActivity.class.getSimpleName();
+	private ApiResponse customerResponse;
+	@BindView(R.id.name)
+	TextView name;
+	@BindView(R.id.number)
+	TextView number;
+	
+	@BindView(R.id.correctResult)
+	View correctResult;
+	
+	@BindView(R.id.wrongResult)
+	View wrongResult;
+	
+	@BindView(R.id.toolbar)
+	Toolbar toolbar;
+	
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.activity_result);
+		setTitle(R.string.result_screen_title);
+		ButterKnife.bind(this);
+		setSupportActionBar(toolbar);
+		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+		customerResponse = getIntent().getParcelableExtra("extra");
+		try {
+			name.setText(customerResponse.result.get(0).fullname);
+			number.setText(customerResponse.result.get(0).phone);
+			if ("Verified".equalsIgnoreCase(customerResponse.result.get(0).verifiedStatus)) {
+				correctResult.setVisibility(View.VISIBLE);
+			} else {
+				wrongResult.setVisibility(View.VISIBLE);
+			}
+			
+		} catch (Exception e) {
+		}
 
 //        login.setOnClickListener(new View.OnClickListener() {
 //            @Override
@@ -47,9 +63,9 @@ public class FinalActivity extends AppCompatActivity {
 //                startActivity(browserIntent);
 //            }
 //        });
-    }
-
-    private void login(String email, String password) {
+	}
+	
+	private void login(String email, String password) {
 //        progressBar.setVisibility(View.VISIBLE);
 //        API.member().login(getRequestBody(email), getRequestBody(password)).enqueue(new retrofit2.Callback<CustomerResponse>() {
 //            @Override
@@ -69,5 +85,5 @@ public class FinalActivity extends AppCompatActivity {
 //                Toast.makeText(FinalActivity.this, "fail", Toast.LENGTH_SHORT).show();
 //            }
 //        });
-    }
+	}
 }

@@ -12,4 +12,7 @@
     <string name="qr_code_last_btn">تحقق من رقم العضوية</string>
     <string name="result_btn_text">إضافة والتسجيل الفاتورة</string>
     <string name="web_link">www.msammon.com</string>
+    <string name="result_screen_title">نتيجة العضوية</string>
+    <string name="result_correct">عضوية فعالة</string>
+    <string name="result_wrong">عضوية غير فعالة</string>
 </resources>
