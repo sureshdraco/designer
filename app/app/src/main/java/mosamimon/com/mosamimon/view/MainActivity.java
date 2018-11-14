@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import mosamimon.com.mosamimon.BuildConfig;
 import mosamimon.com.mosamimon.R;
 import mosamimon.com.mosamimon.rest.API;
 import mosamimon.com.mosamimon.rest.ApiResponse;
@@ -22,77 +23,83 @@ import retrofit2.Call;
 import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity {
-	
-	private static final String TAG = MainActivity.class.getSimpleName();
-	@BindView(R.id.progressBar)
-	ProgressBar progressBar;
-	
-	@BindView(R.id.email)
-	EditText email;
-	
-	@BindView(R.id.password)
-	EditText password;
-	
-	@BindView(R.id.login)
-	View login;
-	
-	@BindView(R.id.webLink)
-	View webLink;
-	
-	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_login);
-		ButterKnife.bind(this);
-		login.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View view) {
-				String emailStr = email.getText().toString();
-				String passwordStr = password.getText().toString();
-				if (TextUtils.isEmpty(emailStr)) {
-					email.setError("Cannot be empty!");
-					return;
-				}
-				if (TextUtils.isEmpty(passwordStr)) {
-					password.setError("Cannot be empty!");
-					return;
-				}
-				login(email.getText().toString(), password.getText().toString());
-			}
-		});
-		webLink.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.msammon.com"));
-				startActivity(browserIntent);
-			}
-		});
-	}
-	
-	private void login(String email, String password) {
-		progressBar.setVisibility(View.VISIBLE);
-		API.member().login(getRequestBody(email), getRequestBody(password)).enqueue(new retrofit2.Callback<ApiResponse>() {
-			@Override
-			public void onResponse(Call<ApiResponse> call, Response<ApiResponse> response) {
-				progressBar.setVisibility(View.GONE);
-				if (response.code() == 200) {
-					startActivity(new Intent(MainActivity.this, ScanCodeActivity.class));
-				} else {
-					Toast.makeText(MainActivity.this, "fail", Toast.LENGTH_SHORT).show();
-				}
-			}
-			
-			@Override
-			public void onFailure(Call<ApiResponse> call, Throwable throwable) {
-				progressBar.setVisibility(View.GONE);
-				Log.e(TAG, throwable.getMessage());
-				Toast.makeText(MainActivity.this, "fail", Toast.LENGTH_SHORT).show();
-			}
-		});
-	}
-	
-	private RequestBody getRequestBody(String field) {
-		return RequestBody.create(MediaType.parse("text/plain"), field);
-	}
-	
+
+    private static final String TAG = MainActivity.class.getSimpleName();
+    @BindView(R.id.progressBar)
+    ProgressBar progressBar;
+
+    @BindView(R.id.email)
+    EditText email;
+
+    @BindView(R.id.password)
+    EditText password;
+
+    @BindView(R.id.login)
+    View login;
+
+    @BindView(R.id.webLink)
+    View webLink;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_login);
+        ButterKnife.bind(this);
+        login.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String emailStr = email.getText().toString();
+                String passwordStr = password.getText().toString();
+                if (TextUtils.isEmpty(emailStr)) {
+                    email.setError("Cannot be empty!");
+                    return;
+                }
+                if (TextUtils.isEmpty(passwordStr)) {
+                    password.setError("Cannot be empty!");
+                    return;
+                }
+                login(email.getText().toString(), password.getText().toString());
+            }
+        });
+        webLink.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.msammon.com"));
+                startActivity(browserIntent);
+            }
+        });
+        if (BuildConfig.DEBUG) {
+            email.setText("Test@dnet.sa");
+            password.setText("testtest");
+        }
+    }
+
+    private void login(String email, String password) {
+        progressBar.setVisibility(View.VISIBLE);
+        API.member().login(getRequestBody(email), getRequestBody(password)).enqueue(new retrofit2.Callback<ApiResponse>() {
+            @Override
+            public void onResponse(Call<ApiResponse> call, Response<ApiResponse> response) {
+                progressBar.setVisibility(View.GONE);
+                if (response.code() == 200) {
+                    Intent intent = new Intent(MainActivity.this, ScanCodeActivity.class);
+                    intent.putExtra("extra", response.body());
+                    startActivity(intent);
+                } else {
+                    Toast.makeText(MainActivity.this, "fail", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ApiResponse> call, Throwable throwable) {
+                progressBar.setVisibility(View.GONE);
+                Log.e(TAG, throwable.getMessage());
+                Toast.makeText(MainActivity.this, "fail", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private RequestBody getRequestBody(String field) {
+        return RequestBody.create(MediaType.parse("text/plain"), field);
+    }
+
 }

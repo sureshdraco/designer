@@ -13,6 +13,9 @@ public class ApiResponse implements Parcelable {
     @Expose
     public List<CustomerResponse> result = null;
 
+    public ApiResponse() {
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -23,14 +26,11 @@ public class ApiResponse implements Parcelable {
         dest.writeTypedList(this.result);
     }
 
-    public ApiResponse() {
-    }
-
     protected ApiResponse(Parcel in) {
         this.result = in.createTypedArrayList(CustomerResponse.CREATOR);
     }
 
-    public static final Parcelable.Creator<ApiResponse> CREATOR = new Parcelable.Creator<ApiResponse>() {
+    public static final Creator<ApiResponse> CREATOR = new Creator<ApiResponse>() {
         @Override
         public ApiResponse createFromParcel(Parcel source) {
             return new ApiResponse(source);

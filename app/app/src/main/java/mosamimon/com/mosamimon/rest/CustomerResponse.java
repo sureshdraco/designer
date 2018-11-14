@@ -23,6 +23,11 @@ public class CustomerResponse implements Parcelable {
     @SerializedName("Fullname")
     @Expose
     public String fullname;
+
+    @SerializedName("Name")
+    @Expose
+    public String companyNane;
+
     @SerializedName("Email")
     @Expose
     public String email;
@@ -99,6 +104,7 @@ public class CustomerResponse implements Parcelable {
         dest.writeString(this.roleID);
         dest.writeString(this.professionIDs);
         dest.writeString(this.fullname);
+        dest.writeString(this.companyNane);
         dest.writeString(this.email);
         dest.writeString(this.password);
         dest.writeString(this.address);
@@ -126,6 +132,7 @@ public class CustomerResponse implements Parcelable {
         this.roleID = in.readString();
         this.professionIDs = in.readString();
         this.fullname = in.readString();
+        this.companyNane = in.readString();
         this.email = in.readString();
         this.password = in.readString();
         this.address = in.readString();
