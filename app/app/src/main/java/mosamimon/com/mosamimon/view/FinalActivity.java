@@ -1,5 +1,7 @@
 package mosamimon.com.mosamimon.view;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -35,6 +37,9 @@ public class FinalActivity extends AppCompatActivity {
     @BindView(R.id.backBtn)
     View backBtn;
 
+    @BindView(R.id.finalLink)
+    View finalLink;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,6 +64,13 @@ public class FinalActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 finish();
+            }
+        });
+        finalLink.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://dnet.so/mosamimon.com/cp/invoices/listall"));
+                startActivity(browserIntent);
             }
         });
 

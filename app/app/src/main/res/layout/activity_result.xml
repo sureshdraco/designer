@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:app="http://schemas.android.com/apk/res-auto"
-                xmlns:tools="http://schemas.android.com/tools"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@drawable/login_bg"
-                tools:context="mosamimon.com.mosamimon.view.MainActivity">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/login_bg"
+    tools:context="mosamimon.com.mosamimon.view.MainActivity">
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
@@ -28,7 +28,7 @@
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:layout_marginEnd="10dp"
-                android:src="@drawable/ic_back"/>
+                android:src="@drawable/ic_back" />
 
             <TextView
                 android:id="@+id/toolbarTitle"
@@ -38,7 +38,7 @@
                 android:fontFamily="@font/helvetica_neuelt_arabic_bold"
                 android:text=""
                 android:textColor="#000"
-                android:textSize="18dp"/>
+                android:textSize="18dp" />
         </RelativeLayout>
     </android.support.v7.widget.Toolbar>
 
@@ -49,8 +49,8 @@
         android:layout_below="@+id/toolbar"
         android:layout_centerHorizontal="true"
         android:layout_marginLeft="30dp"
-        android:layout_marginRight="30dp"
         android:layout_marginTop="40dp"
+        android:layout_marginRight="30dp"
         android:background="@drawable/login_box_shape"
         android:elevation="4dp"
         android:orientation="vertical"
@@ -68,7 +68,7 @@
                 android:fontFamily="@font/helvetica_neuelt_arabic_roman"
                 android:text="اسم العضو :"
                 android:textColor="#000"
-                android:textSize="18dp"/>
+                android:textSize="18dp" />
 
             <TextView
                 android:id="@+id/name"
@@ -79,15 +79,15 @@
                 android:fontFamily="@font/helvetica_neuelt_arabic_roman"
                 android:text="Khalid Abdulaziz"
                 android:textColor="#c2c2c2"
-                android:textSize="16dp"/>
+                android:textSize="16dp" />
         </RelativeLayout>
 
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:layout_marginBottom="20dp"
             android:layout_marginTop="20dp"
-            android:background="#c2c2c2"/>
+            android:layout_marginBottom="20dp"
+            android:background="#c2c2c2" />
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -101,7 +101,7 @@
                 android:fontFamily="@font/helvetica_neuelt_arabic_roman"
                 android:text="رقم العضوية :"
                 android:textColor="#000"
-                android:textSize="18dp"/>
+                android:textSize="18dp" />
 
             <TextView
                 android:id="@+id/number"
@@ -112,15 +112,15 @@
                 android:fontFamily="@font/helvetica_neuelt_arabic_roman"
                 android:text="Khalid Abdulaziz"
                 android:textColor="#c2c2c2"
-                android:textSize="16dp"/>
+                android:textSize="16dp" />
         </RelativeLayout>
 
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:layout_marginBottom="20dp"
             android:layout_marginTop="20dp"
-            android:background="#c2c2c2"/>
+            android:layout_marginBottom="20dp"
+            android:background="#c2c2c2" />
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -134,7 +134,7 @@
                 android:fontFamily="@font/helvetica_neuelt_arabic_roman"
                 android:text="حالة العضوية:"
                 android:textColor="#000"
-                android:textSize="18dp"/>
+                android:textSize="18dp" />
 
             <LinearLayout
                 android:id="@+id/correctResult"
@@ -151,14 +151,14 @@
                     android:fontFamily="@font/helvetica_neuelt_arabic_roman"
                     android:text="@string/result_correct"
                     android:textColor="#21C140"
-                    android:textSize="16dp"/>
+                    android:textSize="16dp" />
 
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="4dp"
                     android:layout_marginStart="15dp"
-                    android:src="@drawable/ic_check_circle"/>
+                    android:layout_marginTop="4dp"
+                    android:src="@drawable/ic_check_circle" />
             </LinearLayout>
 
             <LinearLayout
@@ -176,26 +176,26 @@
                     android:fontFamily="@font/helvetica_neuelt_arabic_roman"
                     android:text="@string/result_wrong"
                     android:textColor="#ff0000"
-                    android:textSize="16dp"/>
+                    android:textSize="16dp" />
 
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="15dp"
                     android:layout_marginTop="4dp"
-                    android:src="@drawable/ic_cancel"/>
+                    android:src="@drawable/ic_cancel" />
             </LinearLayout>
         </RelativeLayout>
 
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:layout_marginBottom="20dp"
             android:layout_marginTop="20dp"
-            android:background="#c2c2c2"/>
+            android:layout_marginBottom="20dp"
+            android:background="#c2c2c2" />
 
         <TextView
-            android:id="@+id/qrCapture"
+            android:id="@+id/finalLink"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
@@ -204,13 +204,13 @@
             android:drawableEnd="@drawable/ic_description"
             android:drawablePadding="20dp"
             android:fontFamily="@font/helvetica_neuelt_arabic_roman"
-            android:paddingBottom="10dp"
             android:paddingLeft="20dp"
-            android:paddingRight="20dp"
             android:paddingTop="10dp"
+            android:paddingRight="20dp"
+            android:paddingBottom="10dp"
             android:text="@string/result_btn_text"
             android:textColor="#fff"
-            android:textSize="16dp"/>
+            android:textSize="16dp" />
     </LinearLayout>
 
     <TextView
@@ -223,5 +223,5 @@
         android:text="@string/web_link"
         android:textColor="#000"
         android:textSize="12dp"
-        android:textStyle="normal"/>
+        android:textStyle="normal" />
 </RelativeLayout>

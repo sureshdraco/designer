@@ -1,8 +1,9 @@
 package mosamimon.com.mosamimon.view;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.text.TextUtils;
 import android.util.Log;
 import android.util.SparseArray;
 import android.widget.Toast;
@@ -17,15 +18,12 @@ import mosamimon.com.mosamimon.R;
 public class SimpleScannerActivity extends AppCompatActivity implements BarcodeReader.BarcodeReaderListener {
     private static final String TAG = SimpleScannerActivity.class.getSimpleName();
 
-    public static String code = "";
-
     private BarcodeReader barcodeReader;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_scanner);
-        code = "";
         // getting barcode instance
         barcodeReader = (BarcodeReader) getSupportFragmentManager().findFragmentById(R.id.barcode_fragment);
 
@@ -53,9 +51,9 @@ public class SimpleScannerActivity extends AppCompatActivity implements BarcodeR
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                if (TextUtils.isEmpty(barcode.displayValue)) code = "";
-                else
-                    code = barcode.displayValue;
+                Intent intent = new Intent();
+                intent.putExtra("extra", barcode.displayValue);
+                setResult(Activity.RESULT_OK, intent);
                 finish();
             }
         });
@@ -72,7 +70,6 @@ public class SimpleScannerActivity extends AppCompatActivity implements BarcodeR
 
     @Override
     public void onScanError(String errorMessage) {
-        code = "";
     }
 
     @Override

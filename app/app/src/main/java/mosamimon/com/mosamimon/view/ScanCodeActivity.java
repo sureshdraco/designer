@@ -1,5 +1,6 @@
 package mosamimon.com.mosamimon.view;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -37,6 +38,9 @@ public class ScanCodeActivity extends AppCompatActivity {
     @BindView(R.id.webLink)
     View webLink;
 
+    @BindView(R.id.logout)
+    View logout;
+
     @BindView(R.id.companyName)
     TextView companyName;
     private ApiResponse apiResponse;
@@ -44,7 +48,6 @@ public class ScanCodeActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        SimpleScannerActivity.code = "";
         setContentView(R.layout.activity_qr_code);
         ButterKnife.bind(this);
         apiResponse = getIntent().getParcelableExtra("extra");
@@ -56,7 +59,7 @@ public class ScanCodeActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(ScanCodeActivity.this, SimpleScannerActivity.class);
-                startActivity(intent);
+                startActivityForResult(intent, 1);
             }
         });
         qrSubmit.setOnClickListener(new View.OnClickListener() {
@@ -77,12 +80,22 @@ public class ScanCodeActivity extends AppCompatActivity {
                 startActivity(browserIntent);
             }
         });
+        logout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
     }
 
     @Override
-    protected void onResume() {
-        super.onResume();
-        qrCode.setText(SimpleScannerActivity.code);
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 1) {
+            if (resultCode == Activity.RESULT_OK) {
+                qrSubmit(data.getStringExtra("extra"));
+            }
+        }
     }
 
     private void qrSubmit(String code) {
@@ -91,13 +104,12 @@ public class ScanCodeActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<ApiResponse> call, Response<ApiResponse> response) {
                 progressBar.setVisibility(View.GONE);
-                Toast.makeText(ScanCodeActivity.this, String.valueOf(response.code()), Toast.LENGTH_SHORT).show();
-                if (response.code() == 200) {
+                if (response.code() == 200 && response.body() != null && response.body().result.size() > 0) {
                     Intent intent = new Intent(ScanCodeActivity.this, FinalActivity.class);
                     intent.putExtra("extra", response.body());
                     startActivity(intent);
                 } else {
-                    Toast.makeText(ScanCodeActivity.this, "fail", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ScanCodeActivity.this, "Failed!", Toast.LENGTH_SHORT).show();
                 }
             }
 
@@ -105,7 +117,7 @@ public class ScanCodeActivity extends AppCompatActivity {
             public void onFailure(Call<ApiResponse> call, Throwable throwable) {
                 progressBar.setVisibility(View.GONE);
                 Log.e(TAG, throwable.getMessage());
-                Toast.makeText(ScanCodeActivity.this, "fail", Toast.LENGTH_SHORT).show();
+                Toast.makeText(ScanCodeActivity.this, "Failed!", Toast.LENGTH_SHORT).show();
             }
         });
     }
